@@ -82,6 +82,7 @@ public class Unit : MonoBehaviour {
         onTurn = false;
         moved = false;
         attacked = false;
+        lm.board.FindTile(coord).CellDispose();
     }
 
     public void MovementSetup()
