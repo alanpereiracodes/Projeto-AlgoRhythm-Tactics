@@ -1,18 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using ObjectType = Tile.ObjectType;
 
 public class Unit : MonoBehaviour {
 
+    //Reference
+    [HideInInspector]
+    public static LevelManager lm;
+
     public enum ActionType
     {
-        Ready = 1,                                                              //Ready to take an aciton, when start a turn;
-        Move,                                                                   //Taking an Movement Action
-        Attack,                                                                 
-        Collect,
-        Interact,
-        Wait,                                                                   //After taking any action in the current turn.
+        Ready,                                                              //Ready to take an aciton, when start a turn;
+        Waiting,                                                                   //After taking any action in the current turn.
         None
     }
 
@@ -26,6 +27,8 @@ public class Unit : MonoBehaviour {
     }
 
     //Status Attributes
+    public string characterName;
+    public int level;
     public int healthCurrent;
     public int healthMax;
     public int attack;
@@ -36,6 +39,9 @@ public class Unit : MonoBehaviour {
     public int jumpHeight;                                                      //Impacts the difference of height that the character can overcome
     public int speed;                                                           //Impacts turn order
 
+
+    //HUD Attirbutes
+    public Sprite portraitSprite;                                                      //Used to load the current Units protrait in the HUD.
 
     //Management Attributes
     public bool onTurn;
@@ -48,9 +54,6 @@ public class Unit : MonoBehaviour {
     [Range(1, 10)]
     public int movementSpeed;                                                   //Speed of the Animation of the movement, less is faster;
 
-    //Reference
-    public LevelManager lm;
-    public Board board;
 
     //Internal
     bool configuring = false;                                                   //Determines if some configuraiton inside Player is ocurring;
@@ -74,12 +77,17 @@ public class Unit : MonoBehaviour {
 
 
     //Common Unit Methods
-
+    public void Refresh()
+    {
+        onTurn = false;
+        moved = false;
+        attacked = false;
+    }
 
     public void MovementSetup()
     {
         Debug.Log("Mover foi selecionado");
-        action = ActionType.Move;
+        //action = ActionType.Move;
 
         if (!configuring)
         {
@@ -87,7 +95,7 @@ public class Unit : MonoBehaviour {
             tilesToMove = new List<MovableTile>();
             List<Tile> alreadyListed = new List<Tile>
             {
-                board.FindTile(coord)                                           //Adiciona o Tile ond eo jogador está.
+                lm.board.FindTile(coord)                                           //Adiciona o Tile ond eo jogador está.
             };
 
             //Varre os Tiles proximos e adiciona a lista de tiles aonde pode se mover;
@@ -95,7 +103,7 @@ public class Unit : MonoBehaviour {
             {
                 if (i == 1)
                 {
-                    List<Tile> tilesAround = board.TilesAround(coord, jumpHeight);
+                    List<Tile> tilesAround = lm.board.TilesAround(coord, jumpHeight);
                     foreach (Tile t in tilesAround)
                     {
                         if (!t.isBlocked)
@@ -113,7 +121,7 @@ public class Unit : MonoBehaviour {
                         //Verifica os Tiles ao redor dos Tiles verificados na iteração anterior
                         if (mT.cost == i - 1)
                         {
-                            List<Tile> tilesAround = board.TilesAround(mT.tile.coord, jumpHeight);
+                            List<Tile> tilesAround = lm.board.TilesAround(mT.tile.coord, jumpHeight);
                             foreach (Tile t in tilesAround)
                             {
                                 if (!alreadyListed.Contains(t) && !t.isBlocked)
@@ -152,14 +160,14 @@ public class Unit : MonoBehaviour {
 
     public void Moved(Vector2 _coord)
     {
-        Tile t = board.FindTile(coord);
+        Tile t = lm.board.FindTile(coord);
         t.CellDispose();
         t.RemoveObject(ObjectType.Unit);
 
         moved = true;
 
         //if (attacked || interacted)
-            action = ActionType.Wait;
+            action = ActionType.Waiting;
         //else
             //action = ActionType.Ready;
 
@@ -168,9 +176,21 @@ public class Unit : MonoBehaviour {
             mT.tile.CellDispose();
         }
 
-        board.FindTile(_coord).AddObject(gameObject, ObjectType.Unit);
+        lm.board.FindTile(_coord).AddObject(gameObject, ObjectType.Unit);
         coord = _coord;
         tilesToMove.Clear();
+    }
+
+    public void CancelUnitMovement()
+    {
+        if(tilesToMove != null && tilesToMove.Count > 0)
+        {
+            foreach (MovableTile mT in tilesToMove)
+            {
+                mT.tile.CellDispose();
+            }
+            tilesToMove.Clear();
+        }
     }
 
 }

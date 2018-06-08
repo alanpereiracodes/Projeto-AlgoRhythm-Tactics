@@ -4,8 +4,15 @@ using System.Linq;
 using UnityEngine;
 using ActionType = Unit.ActionType;
 
+//Elemento principal do sistema de batalha
 public class LevelManager : MonoBehaviour
 {
+    public enum Status
+    {
+        Moving,
+        Acting,
+        Waiting
+    }
 
     [HideInInspector]
     public static LevelManager _instance;
@@ -13,10 +20,17 @@ public class LevelManager : MonoBehaviour
     [HideInInspector]
     public Board board;                                                         //Reference to our board
 
+    [HideInInspector]
+    public HUDManager hud;                                                         //Reference to our HUD
+
     public string mapName;
     public List<GameObject> playersPrefabs;
     public Unit turnPlayer;
     public bool isRunning;
+    public Status currentStatus;
+
+    //
+    public GameObject turnHighlightArrow;
 
     private List<Unit> units;
     private Queue<Unit> turnOrder;
@@ -31,6 +45,7 @@ public class LevelManager : MonoBehaviour
 
         board = GameObject.FindWithTag("Board").GetComponent<Board>();
         units = new List<Unit>();
+        currentStatus = Status.Waiting;
         currentTurn = 1;
         isRunning = false;
     }
@@ -51,7 +66,7 @@ public class LevelManager : MonoBehaviour
 
     public void AddPlayer(Player p)
     {
-        p.action = ActionType.Wait;
+        p.action = ActionType.Waiting;
         units.Add(p);
         turnOrder = new Queue<Unit>();
         //Reorganiza por ordem de velocidade
@@ -63,12 +78,24 @@ public class LevelManager : MonoBehaviour
 
     public void NextPlayerTurn()
     {
+        //Desabilita a função de tomar um turno do jogador que acabou de jogar
+        if (turnPlayer != null)
+            turnPlayer.Refresh();
+
+        hud.HideMenuPanel();
+        hud.HideCancelPanel();
+
         //Verifica se a lita contém alguma unidade
         if(turnOrder.Count > 0)
         {
             turnPlayer = turnOrder.Dequeue();
             turnPlayer.action = ActionType.Ready;
             turnPlayer.onTurn = true;
+            if (!turnHighlightArrow.activeInHierarchy)
+                turnHighlightArrow.SetActive(true);
+            turnHighlightArrow.transform.SetParent(turnPlayer.transform);
+
+            hud.UpdateTurnCharacter(turnPlayer);
 
             switch(turnPlayer.tag)
             {
@@ -96,12 +123,56 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    public void HideHighlightArrow()
+    {
+        if(turnHighlightArrow.activeInHierarchy)
+        {
+            turnHighlightArrow.SetActive(false);
+        }
+    }
+
+    public void CancelButtonClick()
+    {
+        if(!isRunning)
+        {
+            switch (currentStatus)
+            {
+                case Status.Waiting:
+                    Debug.Log("Nenhuma ação está em andamento para ser cancelada. Status: Aguardando uma ação.");
+                    break;
+                case Status.Moving:
+                    CancelMovement();
+                    break;
+                case Status.Acting:
+                    break;
+            }
+            ReturnToActionMenu();
+        }
+    }
+
+    public void ReturnToActionMenu()
+    {
+        hud.HideCancelPanel();
+        hud.ActivateMenuPanel();
+    }
 
     #region Movement Setup
+    //Jogador aperta no botão de se Movimentar e libera as funções de Movimento.
+    public void MoveButtonClick()
+    {
+        turnPlayer.MovementSetup();
+        hud.HideMenuPanel();
+        hud.ActivateCancelPanel();
+        currentStatus = Status.Moving;
+    }
+
+
     //Recebe o Tile para qual o personagem irá se movimenatr e cria o caminho a ser traçado usando uma pilha.
     public void MoveCharacterToTile(Tile destination)
     {
         isRunning = true;
+        hud.HideCancelPanel();
+
         //Cria pilha dos Tiles do caminho com Backtracking através do
         //previousTile de cada MovableTile
         Stack<MovableTile> path = new Stack<MovableTile>();
@@ -200,14 +271,28 @@ public class LevelManager : MonoBehaviour
     //Realiza algumas configurações após o movimento.
     void FinishMovement()
     {
-        if (turnPlayer.action == ActionType.Wait)
+        currentStatus = Status.Waiting;
+        if (turnPlayer.action == ActionType.Waiting)
         {
             NextPlayerTurn();
         }
         isRunning = false;
     }
 
+    //Cancel movement without moving
+    void CancelMovement()
+    {
+        Debug.Log("Mover foi Cancelado.");
+        turnPlayer.CancelUnitMovement();
+        currentStatus = Status.Waiting;
+    }
+
 #endregion
+
+    public void WaitButtonClick()
+    {
+        NextPlayerTurn();
+    }
 
 
 }//END LevelManager

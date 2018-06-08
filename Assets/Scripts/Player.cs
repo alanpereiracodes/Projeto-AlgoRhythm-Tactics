@@ -7,7 +7,6 @@ public class Player : Unit {
     void Start()
     {
         lm = LevelManager._instance;
-        board = lm.board;
     }
 
     private void OnMouseOver()
@@ -16,8 +15,9 @@ public class Player : Unit {
         {
             if (Input.GetMouseButtonDown(0))                                    //Captura o botao de click esquerod do Mouse
             {
-                lm.turnPlayer = this;
-                MovementSetup();
+                //Abre o balão de Menu
+                lm.hud.ActivateMenuPanel();
+                lm.HideHighlightArrow();
             }
         }
     }
@@ -25,13 +25,13 @@ public class Player : Unit {
     private void OnMouseEnter()
     {
         if (action == ActionType.Ready)
-            board.FindTile(coord).CellOnPlayerSelect();
+            lm.board.FindTile(coord).CellOnPlayerSelect();
     }
 
     private void OnMouseExit()
     {
         if(action == ActionType.Ready)
-            board.FindTile(coord).CellDispose();
+            lm.board.FindTile(coord).CellDispose();
     }
 
 

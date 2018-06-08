@@ -166,7 +166,7 @@ public class Tile : MonoBehaviour {
     {
         if (Input.GetMouseButtonDown(0))                                        //Captura o botao de click esquerod do Mouse
         {
-            if (lm.turnPlayer != null && lm.turnPlayer.action == Unit.ActionType.Move)                 //Verifica se a ação na qual o jogador está realziando é de movimento
+            if (lm.turnPlayer != null && lm.currentStatus == LevelManager.Status.Moving)                 //Verifica se a ação na qual o jogador está realziando é de movimento
             {
                 MovableTile mT = lm.turnPlayer.FindTileToMove(this);
                 if (lm.turnPlayer.tilesToMove.Contains(mT))                   //Verifica se esse Tile é um dos Tiles para qual o personagem pode se mover;

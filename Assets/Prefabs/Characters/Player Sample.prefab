@@ -92,18 +92,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58fc80f48af2e40bd87e49cee9fc9d58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  onTurn: 0
-  coord: {x: 0, y: 0}
-  action: 5
+  characterName: Red Player
+  level: 1
+  healthCurrent: 100
+  healthMax: 100
+  attack: 10
+  defense: 10
+  accuracy: 10
+  evasion: 10
   movement: 4
   jumpHeight: 3
   speed: 10
+  portraitSprite: {fileID: 21300000, guid: 50cd306ca2f0d44a1b8c40cc382f3d26, type: 3}
+  onTurn: 0
+  coord: {x: 0, y: 0}
+  action: 5
   moved: 0
   attacked: 0
   interacted: 0
+  facingDirection: 1
   movementSpeed: 6
-  lm: {fileID: 0}
-  board: {fileID: 0}
 --- !u!136 &136067258293235282
 CapsuleCollider:
   m_ObjectHideFlags: 1
