@@ -58,6 +58,7 @@ public class Command : MonoBehaviour {
     /// Damage: 100%
     /// AP Cost: 2
     /// </summary>
+    [TextArea]
     public string cmdDesc;
 
     /// <summary>
@@ -100,6 +101,7 @@ public class Command : MonoBehaviour {
 
     [Header("Hit Attributes")]
     public bool canMiss;                                                        //true = canMiss / false = cantMiss
+    public int hitRateSum;
     public float hitRateMultiplier;
 
     [Header("Target Attributes")]
@@ -118,10 +120,14 @@ public class Command : MonoBehaviour {
     public float debuffSuccessRate;
 
 
-    //Methods
+    //Calculating Methods
+
     public float GetHitChance(Unit attacker, Unit defender)
     {
-        float hitCalc = (attacker.accuracy * hitRateMultiplier) - defender.evasion * 0.4f;   //100 acc x 100 eva -> (100 * 1) - 40 = 60% to Hit
+        //Example 100 acc x 100 eva -> (100 * 1) - 40 = 60% to Hit. 
+        //Summarizing, if you have the same value of acc and eva, the chance ot hit is 60%
+        float hitCalc = (attacker.accuracy * hitRateMultiplier) + hitRateSum;
+        hitCalc -= (defender.evasion * 0.4f);
         hitCalc = Mathf.Clamp(hitCalc, 5, 95);                                  //Minimun chance of Hit: 5% / Maximum chance of hit: 95%.
         return hitCalc;
     }
