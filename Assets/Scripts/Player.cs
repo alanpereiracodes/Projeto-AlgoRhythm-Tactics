@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Player : Unit {
 
+    //Equipments
+    //public Weapon playerWeapon;
+    //
+
     void Start()
     {
         lm = LevelManager._instance;
@@ -34,7 +38,6 @@ public class Player : Unit {
         if(action == ActionType.Ready && lm.currentStatus == LevelManager.Status.Waiting)
             lm.board.FindTile(coord).CellDispose();
     }
-
 
 
 

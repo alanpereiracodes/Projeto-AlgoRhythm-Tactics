@@ -104,6 +104,7 @@ MonoBehaviour:
   jumpHeight: 2
   speed: 18
   portraitSprite: {fileID: 21300000, guid: da3abae73b8e84239969fcaf044f8147, type: 3}
+  unitType: 1
   onTurn: 0
   coord: {x: 0, y: 0}
   action: 5

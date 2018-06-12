@@ -26,6 +26,13 @@ public class Unit : MonoBehaviour {
         Left
     }
 
+    public enum UnitType
+    {
+        Player = 1,
+        Enemy,
+        Guest
+    }
+
     //Status Attributes
     public string characterName;
     public int level;
@@ -33,17 +40,23 @@ public class Unit : MonoBehaviour {
     public int healthMax;
     public int attack;
     public int defense;
+    public int magicpow;
+    public int resistance;
     public int accuracy;
     public int evasion;
     public int movement;                                                        //Impacts how many tiles it can walk in a turn
     public int jumpHeight;                                                      //Impacts the difference of height that the character can overcome
     public int speed;                                                           //Impacts turn order
+    public int luck;                                                            //For every 10 in Luck, the characters gains one for critical rate;
+    public List<Command.Buff> buffs;
+    public List<Command.Debuff> debuffs;
 
 
     //HUD Attirbutes
     public Sprite portraitSprite;                                                      //Used to load the current Units protrait in the HUD.
 
     //Management Attributes
+    public UnitType unitType;
     public bool onTurn;
     public Vector2 coord;                                                       //The position of the Unit in the board
     public ActionType action = ActionType.None;
@@ -58,23 +71,6 @@ public class Unit : MonoBehaviour {
     //Internal
     bool configuring = false;                                                   //Determines if some configuraiton inside Player is ocurring;
 
-    /*
-    public int ModSpeed()                                                       //Retrieve speed with the modifiers;
-    {
-        
-        //Modifiers could be Equipments, Buffs and Debuffs
-        foreach(Buff b in buffs)
-        {
-            if (b.type == SpeedBuff)
-                if (b.isSum)
-                    modSpeed = speed + b.value;
-                else
-                    modSpeed = speed * b.value; //(1.2 sample);
-        }
-        return modSpeed;
-    }
-    */
-
 
     //Common Unit Methods
     public void Refresh()
@@ -84,6 +80,11 @@ public class Unit : MonoBehaviour {
         attacked = false;
         lm.board.FindTile(coord).CellDispose();
     }
+
+    //Modded Attributes
+    //Calculates Buffs and Debuffs
+    //Calculates Equipments if a Player
+    //
 
     public void MovementSetup()
     {

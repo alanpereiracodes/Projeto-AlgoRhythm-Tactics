@@ -98,17 +98,17 @@ public class LevelManager : MonoBehaviour
 
             hud.UpdateTurnCharacter(turnPlayer);
 
-            switch(turnPlayer.tag)
+            switch(turnPlayer.unitType)
             {
-                case Tag.PLAYER:
+                case Unit.UnitType.Player:
                     //
                     break;
 
-                case Tag.ENEMY:
+                case Unit.UnitType.Enemy:
                     //
                     break;
 
-                case Tag.GUEST:
+                case Unit.UnitType.Guest:
                     //
                     break;
             }
