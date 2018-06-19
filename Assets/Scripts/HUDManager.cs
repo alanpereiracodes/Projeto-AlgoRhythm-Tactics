@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class HUDManager : MonoBehaviour {
 
     //Action Menu
-    public GameObject unitPanel, actionMenuPanel, cancelMenuPanel;
+    public GameObject unitPanel, selectionMenuPanel, cancelMenuPanel, actionMenuPanel;
 
     //Turn Character Information
     public Image characterImage;
@@ -19,7 +19,10 @@ public class HUDManager : MonoBehaviour {
 
     private void Start()
     {
-        LevelManager._instance.hud = this;
+        if (LevelManager._instance.hud == null)
+            LevelManager._instance.hud = this;
+        else
+            Destroy(this);
     }
 
     //Atualiza a HUD com as informações do personagem do turno atual
@@ -48,16 +51,29 @@ public class HUDManager : MonoBehaviour {
             unitPanel.SetActive(false);
     }
 
-    //Action Menu Panel
+    //Selection Menu Panel
     public void ActivateMenuPanel()
     {
-        if(!actionMenuPanel.activeInHierarchy)
-            actionMenuPanel.SetActive(true);
+        if(!selectionMenuPanel.activeInHierarchy)
+            selectionMenuPanel.SetActive(true);
     }
 
     public void HideMenuPanel()
     {
-        if(actionMenuPanel.activeInHierarchy)
+        if(selectionMenuPanel.activeInHierarchy)
+            selectionMenuPanel.SetActive(false);
+    }
+
+    //Action Menu Panel
+    public void ActivateActionPanel()
+    {
+        if (!actionMenuPanel.activeInHierarchy)
+            actionMenuPanel.SetActive(true);
+    }
+
+    public void HideActionPanel()
+    {
+        if (actionMenuPanel.activeInHierarchy)
             actionMenuPanel.SetActive(false);
     }
 

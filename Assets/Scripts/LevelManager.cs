@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using ActionType = Unit.ActionType;
 
@@ -24,6 +23,10 @@ public class LevelManager : MonoBehaviour
     [HideInInspector]
     public HUDManager hud;                                                         //Reference to our HUD
 
+    [HideInInspector]
+    public TurnManager turn;                                                         //Reference to our Turn Manager
+
+
     public string mapName;
     public List<GameObject> playersPrefabs;
     public Unit turnPlayer;
@@ -33,9 +36,6 @@ public class LevelManager : MonoBehaviour
     //
     public GameObject turnHighlightArrow;
 
-    private List<Unit> units;
-    private Queue<Unit> turnOrder;
-    private int currentTurn;
 
     void Awake()
     {
@@ -45,9 +45,7 @@ public class LevelManager : MonoBehaviour
             Destroy(this);
 
         board = GameObject.FindWithTag("Board").GetComponent<Board>();
-        units = new List<Unit>();
         currentStatus = Status.Waiting;
-        currentTurn = 1;
         isRunning = false;
     }
 
@@ -68,13 +66,8 @@ public class LevelManager : MonoBehaviour
     public void AddPlayer(Player p)
     {
         p.action = ActionType.Waiting;
-        units.Add(p);
-        turnOrder = new Queue<Unit>();
-        //Reorganiza por ordem de velocidade
-        foreach (Unit u in units.OrderByDescending(unit => unit.speed).ToList())
-        {
-            turnOrder.Enqueue(u);
-        }
+        turn.AddPlayerToTurnList(p);
+
     }
 
     public void NextPlayerTurn()
@@ -86,42 +79,7 @@ public class LevelManager : MonoBehaviour
         hud.HideMenuPanel();
         hud.HideCancelPanel();
 
-        //Verifica se a lita contém alguma unidade
-        if(turnOrder.Count > 0)
-        {
-            turnPlayer = turnOrder.Dequeue();
-            turnPlayer.action = ActionType.Ready;
-            turnPlayer.onTurn = true;
-            if (!turnHighlightArrow.activeInHierarchy)
-                turnHighlightArrow.SetActive(true);
-            turnHighlightArrow.transform.SetParent(turnPlayer.transform);
-
-            hud.UpdateTurnCharacter(turnPlayer);
-
-            switch(turnPlayer.unitType)
-            {
-                case Unit.UnitType.Player:
-                    //
-                    break;
-
-                case Unit.UnitType.Enemy:
-                    //
-                    break;
-
-                case Unit.UnitType.Guest:
-                    //
-                    break;
-            }
-        }
-        else
-        {
-            currentTurn++;
-            foreach (Unit u in units.OrderByDescending(unit => unit.speed).ToList())
-            {
-                turnOrder.Enqueue(u);
-            }
-            NextPlayerTurn();
-        }
+        turn.SetupNextTurn();
     }
 
     public void HideHighlightArrow()
@@ -140,19 +98,21 @@ public class LevelManager : MonoBehaviour
             {
                 case Status.Selecting:
                 case Status.Waiting:
-                    Debug.Log("Nenhuma ação está em andamento para ser cancelada. Status: Aguardando uma ação.");
+                    Debug.Log("Nenhuma ação está em andamento para ser cancelada. Status: " + ((currentStatus == Status.Waiting)? "Aguardando uma ação." : "Selecionando uma ação."));
                     break;
                 case Status.Moving:
                     CancelMovement();
                     break;
                 case Status.Acting:
+                    hud.HideActionPanel();
+                    CancelAction();
                     break;
             }
-            ReturnToActionMenu();
+            ReturnToSelectionMenu();
         }
     }
 
-    public void ReturnToActionMenu()
+    public void ReturnToSelectionMenu()
     {
         hud.HideCancelPanel();
         hud.ActivateMenuPanel();
@@ -290,6 +250,22 @@ public class LevelManager : MonoBehaviour
     }
 
 #endregion
+
+    public void ActionButtonClick()
+    {
+        hud.HideMenuPanel();
+        hud.ActivateActionPanel();
+        hud.ActivateCancelPanel();
+        currentStatus = Status.Acting;
+    }
+
+    //Cancel action without acting
+    void CancelAction()
+    {
+        Debug.Log("Tomar Ação foi Cancelado.");
+        //turnPlayer.CancelUnitMovement();
+        currentStatus = Status.Selecting;
+    }
 
     public void WaitButtonClick()
     {
