@@ -4,7 +4,7 @@
       <File FileName="Assets/Scripts/LevelManager.cs" Line="106" Column="36" />
       <File FileName="Assets/Scripts/Unit.cs" Line="85" Column="35" />
       <File FileName="Assets/Scripts/Tile.cs" Line="169" Column="88" />
-      <File FileName="Assets/Scripts/Command.cs" Line="239" Column="29" />
+      <File FileName="Assets/Scripts/Command.cs" Line="232" Column="15" />
       <File FileName="Assets/Scripts/HUDManager.cs" Line="77" Column="28" />
       <File FileName="Assets/Scripts/TurnManager.cs" Line="115" Column="6" />
       <File FileName="Assets/Scripts/Player.cs" Line="1" Column="1" />

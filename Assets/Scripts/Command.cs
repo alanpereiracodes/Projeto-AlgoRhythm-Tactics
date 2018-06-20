@@ -229,6 +229,7 @@ public class Command : MonoBehaviour {
             //Show Descrição
             //Update Desc Text
             //Update Desc Target Type Image
+            //Deixa em Vermelho as Celulas que serao atingidas
         }
     }
 
@@ -237,6 +238,7 @@ public class Command : MonoBehaviour {
         if (!isOnProgram)
         {
             //Hide Descrição
+            //Retorna as Celulas ao normal
         } 
     }
 }

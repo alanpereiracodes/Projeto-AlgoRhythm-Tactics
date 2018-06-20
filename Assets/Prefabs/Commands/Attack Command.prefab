@@ -93,6 +93,7 @@ MonoBehaviour:
 
     Cost: 2 AP'
   cmdType: 0
+  cmdTargetImage: {fileID: 0}
   isOnProgram: 0
   cmdCost: 2
   powerSum: 0
@@ -123,7 +124,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.47794116, b: 0.47794116, a: 1}
+  m_Color: {r: 1, g: 0.6784314, b: 0.58431375, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -132,7 +133,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 21300002, guid: 0f25b8fe9ba424545a987e396c88a74c, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
