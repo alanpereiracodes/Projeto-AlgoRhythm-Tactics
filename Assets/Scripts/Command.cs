@@ -58,7 +58,7 @@ public class Command : MonoBehaviour {
     /// Damage: 100%
     /// AP Cost: 2
     /// </summary>
-    [TextArea]
+    [TextArea(3,6)]
     public string cmdDesc;
 
     /// <summary>
@@ -75,9 +75,9 @@ public class Command : MonoBehaviour {
     public CommandType cmdType;
 
     /// <summary>
-    /// Icon of the Command to be presenetd in the Command Set
+    /// Image of the Target Type in the description panel.
     /// </summary>
-    public Sprite cmdIcon;
+    public Sprite cmdTargetImage;
 
     /// <summary>
     /// Determines if this command is on the Command Set (false) or in the Program (true).
@@ -97,7 +97,8 @@ public class Command : MonoBehaviour {
     public float powerMultiplier;                                               //Values like 0.75 (for 75%), 1 for 100%, 1.2 for 120%, 2 for 200% attack, etc.
     public bool isPhysical;                                                     //true = Physical / false = Magical
     public bool ignoreDefense;                                                  //true for ignoring Defense/Resistance
-    public float criticalRate;                                                  //If critical it will cause (Calculated Damage) * 1.5.
+    [Range(0, 50)]
+    public float criticalRateSum;                                                  //If critical, the damage caused will be (Calculated Damage) * 1.5.
 
     [Header("Hit Attributes")]
     public bool canMiss;                                                        //true = canMiss / false = cantMiss
@@ -112,11 +113,13 @@ public class Command : MonoBehaviour {
     [Header("Buff Attributes")]
     public bool canCauseBuff;
     public Buff cmdBuff;
+    [Range(0, 1)]
     public float buffSuccessRate;
 
     [Header("Debuff Attributes")]
     public bool canCauseDebuff;
     public Debuff cmdDebuff;
+    [Range(0, 1)]
     public float debuffSuccessRate;
 
 
@@ -173,7 +176,7 @@ public class Command : MonoBehaviour {
         }
 
         float rnd = Random.Range(0, 100);
-        float newCriticalRate = (attacker.luck > 10)? criticalRate + (attacker.luck / 10) : criticalRate;
+        float newCriticalRate = (attacker.luck > 10)? criticalRateSum + (attacker.luck / 10) : criticalRateSum;
         newCriticalRate -= (defender.luck / 10) * 0.5f;
         newCriticalRate = Mathf.Clamp(newCriticalRate, 1, 50);                  //Minimun chance of Critical: 1% / Maximum Chance of Critical: 50%. 
 
@@ -195,7 +198,7 @@ public class Command : MonoBehaviour {
             healing = ((caster.magicpow) * powerMultiplier) + powerSum;
 
         float rnd = Random.Range(0, 100);
-        float newCriticalRate = (caster.luck > 10) ? criticalRate + (caster.luck / 10) : criticalRate;
+        float newCriticalRate = (caster.luck > 10) ? criticalRateSum + (caster.luck / 10) : criticalRateSum;
         newCriticalRate = Mathf.Clamp(newCriticalRate, 1, 50);                  //Minimun chance of Critical: 1% / Maximum Chance of Critical: 50%. 
 
         if (rnd < newCriticalRate)
@@ -206,5 +209,34 @@ public class Command : MonoBehaviour {
         return (int)healing;
     }
 
+    //Mouse Interactions Methods
+    public void OnClick()
+    {
+        if(isOnProgram)
+        {
+            //Remove da Lista do Programa e Destroy.
+        }
+        else
+        {
+            //Instancia no Programa e adiciona a Lista do Programa
+        }
+    }
 
+    public void OnMouseEnter()
+    {
+        if(!isOnProgram)
+        {
+            //Show Descrição
+            //Update Desc Text
+            //Update Desc Target Type Image
+        }
+    }
+
+    public void OnMouseExit()
+    {
+        if (!isOnProgram)
+        {
+            //Hide Descrição
+        } 
+    }
 }
