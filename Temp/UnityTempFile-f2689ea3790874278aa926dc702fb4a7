@@ -80,6 +80,7 @@
 'Assets/Scripts/ActionProgramManager.cs'
 'Assets/Scripts/Board.cs'
 'Assets/Scripts/Command.cs'
+'Assets/Scripts/CommandEventTrigger.cs'
 'Assets/Scripts/HUDManager.cs'
 'Assets/Scripts/LevelManager.cs'
 'Assets/Scripts/Player.cs'

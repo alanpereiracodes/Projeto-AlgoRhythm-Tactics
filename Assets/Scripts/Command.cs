@@ -108,6 +108,12 @@ public class Command : MonoBehaviour {
 
     [Header("Target Attributes")]
     public TargetType cmdTarget;
+    /// <summary>
+    /// True means that will have a calculation to see if a Tile can be targeted.
+    /// If the result is less than the (jump - target tile height_ then it can be targeted.
+    //  False means that height does not interfere for this skill targeting.
+    /// </summary>
+    public bool heightCalc;                                                      
     [Range(2, 5)]
     public int distance;                                                        //If AtCell or CrossAtCell, the target cell is calculated in the following way: unit's cell + distance;
 
@@ -231,6 +237,8 @@ public class Command : MonoBehaviour {
             //Ativa um Contorno no comando
             LevelManager._instance.actionProgram.UpdateDescription(this);
             //Deixa em Vermelho as Celulas que serao atingidas
+            bool offensive = (cmdType == CommandType.Offensive);
+            LevelManager._instance.TargetCells(cmdTarget, heightCalc, offensive);
         }
     }
 
@@ -241,6 +249,7 @@ public class Command : MonoBehaviour {
             //Hide Descrição
             LevelManager._instance.actionProgram.HideDescPanel();
             //Retorna as Celulas ao normal
+            LevelManager._instance.UntargetCells();
         } 
     }
 }

@@ -98,11 +98,16 @@ MonoBehaviour:
   healthMax: 100
   attack: 10
   defense: 10
+  magicpow: 0
+  resistance: 0
   accuracy: 10
   evasion: 10
   movement: 4
   jumpHeight: 3
   speed: 10
+  luck: 0
+  buffs: 
+  debuffs: 
   portraitSprite: {fileID: 21300000, guid: 50cd306ca2f0d44a1b8c40cc382f3d26, type: 3}
   unitType: 1
   onTurn: 0
@@ -111,7 +116,7 @@ MonoBehaviour:
   moved: 0
   attacked: 0
   interacted: 0
-  facingDirection: 1
+  facingDirection: 2
   movementSpeed: 6
 --- !u!136 &136067258293235282
 CapsuleCollider:

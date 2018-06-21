@@ -20,10 +20,10 @@ public class Unit : MonoBehaviour {
     //Determina para qual a direção que o personageme stá olhando
     public enum Facing
     {
-        Front = 1,
-        Right,
-        Back,
-        Left
+        Up = 1,                                                              //Looking to the Tile at X+1
+        Right,                                                                  //Looking to the Tile at Y+1
+        Down,                                                                   //Looking to the Tile at X-1
+        Left                                                                    //Looking to the Tile at Y-1
     }
 
     public enum UnitType

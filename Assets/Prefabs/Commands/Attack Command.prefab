@@ -105,6 +105,7 @@ MonoBehaviour:
   hitRateSum: 20
   hitRateMultiplier: 1
   cmdTarget: 0
+  heightCalc: 1
   distance: 2
   canCauseBuff: 0
   cmdBuff: 0

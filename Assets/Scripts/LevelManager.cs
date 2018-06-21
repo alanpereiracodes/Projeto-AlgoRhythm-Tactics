@@ -40,6 +40,7 @@ public class LevelManager : MonoBehaviour
     //
     public GameObject turnHighlightArrow;
 
+    List<Tile> tilesTargeted;
 
     void Awake()
     {
@@ -50,6 +51,7 @@ public class LevelManager : MonoBehaviour
 
         board = GameObject.FindWithTag("Board").GetComponent<Board>();
         currentStatus = Status.Waiting;
+        tilesTargeted = new List<Tile>();
         isRunning = false;
     }
 
@@ -271,14 +273,81 @@ public class LevelManager : MonoBehaviour
         currentStatus = Status.Selecting;
     }
 
-    public void ShowCommandTargetCells(TargetType targetType)
+    //Get all cells that will be affected by a Command
+    public void GetCommandTargetCells(TargetType _targetType, bool heightCalc)
     {
-        switch(targetType)
+        tilesTargeted.Clear();
+
+        int h = 0;
+        if (heightCalc)
+            h = board.FindTile(turnPlayer.coord).height;
+
+        switch (_targetType)
         {
+            case TargetType.Self:
+                tilesTargeted.Add(board.FindTile(turnPlayer.coord));
+                break;
+
             case TargetType.Front:
-                
+                Tile front = board.TargetFrontTile(turnPlayer.facingDirection, turnPlayer.coord);
+                if(front != null && !front.isBlocked)
+                {
+                    if (heightCalc)
+                    {
+                        if (CalculateTargetHeight(h, front.height))
+                            tilesTargeted.Add(front);
+                    }
+                    else
+                        tilesTargeted.Add(front);
+                }
+                break;
+
+            case TargetType.Triangle:
+                if (heightCalc)
+                {
+                    List<Tile> triangle = board.TargetFrontTriangle(turnPlayer.facingDirection, turnPlayer.coord);
+                    foreach (Tile t in triangle)
+                    {
+                        if (CalculateTargetHeight(h, t.height))
+                            tilesTargeted.Add(t);
+                    }
+                }
+                else
+                    tilesTargeted = board.TargetFrontTriangle(turnPlayer.facingDirection, turnPlayer.coord);
                 break;
         }
+    }
+
+    public void TargetCells(TargetType _targetType, bool heightCalc, bool offensive)
+    {
+        GetCommandTargetCells(_targetType, heightCalc);
+
+        if(offensive)
+            foreach(Tile t in tilesTargeted)
+            {
+                    t.CellOnRedTarget();
+            }
+        else
+            foreach (Tile t in tilesTargeted)
+            {
+                t.CellOnBlueTarget();
+            } 
+    }
+
+    public void UntargetCells()
+    {
+        foreach (Tile t in tilesTargeted)
+        {
+            t.CellDispose();
+        }
+    }
+
+    public bool CalculateTargetHeight(int playerTileHeight, int anotherTileHeight)
+    {
+        if (Mathf.Abs(playerTileHeight - anotherTileHeight) < turnPlayer.jumpHeight)
+            return true;
+        
+        return false;
     }
 
     //Wait

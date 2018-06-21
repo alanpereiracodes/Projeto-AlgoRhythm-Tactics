@@ -7,6 +7,7 @@ public class MovableTile {
     public Tile tile;
     public int cost;
     public Tile previousTile;                                                   //Usado para identificar qual foi o Tile que encontrou o caminho até este Tile.
+    //Direção tomada?
 
     public MovableTile(Tile t, int moveCost)
     {
@@ -159,10 +160,17 @@ public class Tile : MonoBehaviour {
     }
 
     //Red
-    public void CellOnTarget()
+    public void CellOnRedTarget()
     {
         cellSprite.gameObject.SetActive(true);
         cellSprite.color = new Color(1f, 0.3f, 0.3f, 0.6f);
+    }
+
+    //Blue
+    public void CellOnBlueTarget()
+    {
+        cellSprite.gameObject.SetActive(true);
+        cellSprite.color = new Color(0f, 0.8f, 1f, 0.6f);
     }
 
     public void CellDispose()
