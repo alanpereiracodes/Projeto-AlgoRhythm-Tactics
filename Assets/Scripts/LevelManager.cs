@@ -128,6 +128,9 @@ public class LevelManager : MonoBehaviour
     //Jogador aperta no botão de se Movimentar e libera as funções de Movimento.
     public void MoveButtonClick()
     {
+        if (turnPlayer.moved)
+            return;
+
         turnPlayer.MovementSetup();
         hud.HideMenuPanel();
         hud.ActivateCancelPanel();
@@ -198,6 +201,9 @@ public class LevelManager : MonoBehaviour
         //Atualiza as coordenadas do personagem que foi movimentado
         turnPlayer.Moved(toMove.coord);
 
+        //TODO: Antes de finalziar o movimento, seria necessário abrr um afunção par apermitir o jogador mudar a direção. 
+        //E após isso, na função nova, finalziar o movimento.
+
         //Finaliza o movimento
         FinishMovement();
 
@@ -244,6 +250,10 @@ public class LevelManager : MonoBehaviour
             currentStatus = Status.Waiting;
             NextPlayerTurn();
         }
+        else
+        {
+            ReturnToSelectionMenu();
+        }
         isRunning = false;
     }
 
@@ -259,9 +269,13 @@ public class LevelManager : MonoBehaviour
 
     public void ActionButtonClick()
     {
+        if (turnPlayer.attacked)
+            return;
+
         hud.HideMenuPanel();
         hud.ActivateActionPanel();
         hud.ActivateCancelPanel();
+        actionProgram.UpdateActionPoints();
         currentStatus = Status.Acting;
     }
 
@@ -269,7 +283,7 @@ public class LevelManager : MonoBehaviour
     void CancelAction()
     {
         Debug.Log("Tomar Ação foi Cancelado.");
-        //turnPlayer.CancelUnitMovement();
+        actionProgram.ClearProgram();
         currentStatus = Status.Selecting;
     }
 

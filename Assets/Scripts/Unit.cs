@@ -44,7 +44,8 @@ public class Unit : MonoBehaviour {
     public int resistance;
     public int accuracy;
     public int evasion;
-    public int movement;                                                        //Impacts how many tiles it can walk in a turn
+    public int actionPoints;                                                    //Determines how much points the unit has to use command skills;
+    public int movementPoints;                                                  //Impacts how many tiles it can walk in a turn
     public int jumpHeight;                                                      //Impacts the difference of height that the character can overcome
     public int speed;                                                           //Impacts turn order
     public int luck;                                                            //For every 10 in Luck, the characters gains one for critical rate;
@@ -79,12 +80,20 @@ public class Unit : MonoBehaviour {
         moved = false;
         attacked = false;
         lm.board.FindTile(coord).CellDispose();
+
     }
+
+    /*
+    public void StartTurn()
+    {
+        //Buffs like Regen happens here
+    }
+    */
 
     //Modded Attributes
     //Calculates Buffs and Debuffs
     //Calculates Equipments if a Player
-    //
+
 
     public void MovementSetup()
     {
@@ -101,7 +110,7 @@ public class Unit : MonoBehaviour {
             };
 
             //Varre os Tiles proximos e adiciona a lista de tiles aonde pode se mover;
-            for (int i = 1; i <= movement; i++)
+            for (int i = 1; i <= movementPoints; i++)
             {
                 if (i == 1)
                 {
@@ -168,10 +177,10 @@ public class Unit : MonoBehaviour {
 
         moved = true;
 
-        //if (attacked || interacted)
+        if (attacked)
             action = ActionType.Waiting;
-        //else
-            //action = ActionType.Ready;
+        else
+            action = ActionType.Ready;
 
         foreach (MovableTile mT in tilesToMove)
         {

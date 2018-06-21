@@ -102,7 +102,8 @@ MonoBehaviour:
   resistance: 0
   accuracy: 15
   evasion: 15
-  movement: 5
+  actionPoints: 6
+  movementPoints: 5
   jumpHeight: 2
   speed: 18
   luck: 0

@@ -88,7 +88,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114986361897752392}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 114995535461513468}
+        m_MethodName: OnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &114946740108184840
@@ -163,6 +174,7 @@ MonoBehaviour:
   hitRateSum: 20
   hitRateMultiplier: 1
   cmdTarget: 2
+  heightCalc: 0
   distance: 2
   canCauseBuff: 1
   cmdBuff: 0

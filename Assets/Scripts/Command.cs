@@ -80,11 +80,13 @@ public class Command : MonoBehaviour {
     /// </summary>
     public Sprite cmdTargetImage;
 
+    [Header("Program Attributes")]
     /// <summary>
     /// Determines if this command is on the Command Set (false) or in the Program (true).
     /// This interfere with what action it will execute when clicked.
     /// </summary>
     public bool isOnProgram;
+    public int ID;
 
 
     //Depending of the Type, some of the following attributes will be read
@@ -222,34 +224,29 @@ public class Command : MonoBehaviour {
         if(isOnProgram)
         {
             //Remove da Lista do Programa e Destroy.
+            LevelManager._instance.actionProgram.RemoveCommandFromProgram(this);
         }
         else
         {
             //Instancia no Programa e adiciona a Lista do Programa
+            LevelManager._instance.actionProgram.AddCommandToProgram(this);
         }
     }
 
     public void OnMouseEnter()
     {
-        Debug.Log("1");
-        if(!isOnProgram)
-        {
-            //Ativa um Contorno no comando
-            LevelManager._instance.actionProgram.UpdateDescription(this);
-            //Deixa em Vermelho as Celulas que serao atingidas
-            bool offensive = (cmdType == CommandType.Offensive);
-            LevelManager._instance.TargetCells(cmdTarget, heightCalc, offensive);
-        }
+        //Ativa um Contorno no comando
+        LevelManager._instance.actionProgram.UpdateDescription(this);
+        //Deixa em Vermelho as Celulas que serao atingidas
+        bool offensive = (cmdType == CommandType.Offensive);
+        LevelManager._instance.TargetCells(cmdTarget, heightCalc, offensive);
     }
 
     public void OnMouseExit()
     {
-        if (!isOnProgram)
-        {
-            //Hide Descrição
-            LevelManager._instance.actionProgram.HideDescPanel();
-            //Retorna as Celulas ao normal
-            LevelManager._instance.UntargetCells();
-        } 
+        //Hide Descrição
+        LevelManager._instance.actionProgram.HideDescPanel();
+        //Retorna as Celulas ao normal
+        LevelManager._instance.UntargetCells();
     }
 }
