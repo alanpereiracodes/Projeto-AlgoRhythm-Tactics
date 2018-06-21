@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using ActionType = Unit.ActionType;
+using TargetType = Command.TargetType;
 
 //Elemento principal do sistema de batalha
 public class LevelManager : MonoBehaviour
@@ -21,10 +22,13 @@ public class LevelManager : MonoBehaviour
     public Board board;                                                         //Reference to our board
 
     [HideInInspector]
-    public HUDManager hud;                                                         //Reference to our HUD
+    public HUDManager hud;                                                      //Reference to our HUD
 
     [HideInInspector]
-    public TurnManager turn;                                                         //Reference to our Turn Manager
+    public TurnManager turn;                                                    //Reference to our Turn Manager
+
+    [HideInInspector]
+    public ActionProgramManager actionProgram;                                  //Reference to our Turn Manager
 
 
     public string mapName;
@@ -267,6 +271,17 @@ public class LevelManager : MonoBehaviour
         currentStatus = Status.Selecting;
     }
 
+    public void ShowCommandTargetCells(TargetType targetType)
+    {
+        switch(targetType)
+        {
+            case TargetType.Front:
+                
+                break;
+        }
+    }
+
+    //Wait
     public void WaitButtonClick()
     {
         NextPlayerTurn();

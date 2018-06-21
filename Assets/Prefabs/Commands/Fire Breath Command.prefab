@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 114411680820780458}
   - component: {fileID: 114924923504495996}
   - component: {fileID: 114268303828876416}
+  - component: {fileID: 114754554154893054}
   m_Layer: 5
   m_Name: Fire Breath Command
   m_TagString: Untagged
@@ -43,9 +44,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cmdName: Heal
-  cmdDesc: "Cast a fire breath in front of you with increased chance of critical.\nMagical
-    Attack\nEffect: Little chance of inflicting burn.\nPower: 150\x03\nCost: 3 AP"
+  cmdDesc: "[Magical Attack]\nCast a fire breath in front of you with increased chance
+    of critical.\nEffect: Little chance of inflicting burn.\nPower: 150\x03\nCost:
+    3 AP"
   cmdType: 0
+  cmdTargetImage: {fileID: 21300000, guid: 45b558639822941a99f96d7ec4016592, type: 3}
   isOnProgram: 0
   cmdCost: 3
   powerSum: 0
@@ -109,6 +112,19 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114754554154893054
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1114828625539944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 164b82101eb2840a599e64e1fea99724, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates: []
+  delegates: []
 --- !u!114 &114924923504495996
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 114974883963423678}
   - component: {fileID: 114120644425442706}
   - component: {fileID: 114518620711097406}
+  - component: {fileID: 114603991164310578}
   m_Layer: 5
   m_Name: Attack Command
   m_TagString: Untagged
@@ -84,16 +85,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cmdName: Attack
-  cmdDesc: 'Attacks an unit in front of you using your main weapon with increased
-    hit chance.
+  cmdDesc: '[Physical Attack]
 
-    Physical Attack
+    Attacks an unit in front of you using your main weapon with increased hit chance.
 
     Power: 100
 
     Cost: 2 AP'
   cmdType: 0
-  cmdTargetImage: {fileID: 0}
+  cmdTargetImage: {fileID: 21300000, guid: 182949600af7e4a04acb5ab87ce53fc7, type: 3}
   isOnProgram: 0
   cmdCost: 2
   powerSum: 0
@@ -139,6 +139,19 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114603991164310578
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1801686519233126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 164b82101eb2840a599e64e1fea99724, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates: []
+  delegates: []
 --- !u!114 &114974883963423678
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 114079092991894484}
   - component: {fileID: 114577648562765152}
   - component: {fileID: 114995535461513468}
+  - component: {fileID: 114946740108184840}
   m_Layer: 5
   m_Name: Guard Command
   m_TagString: Untagged
@@ -90,6 +91,19 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114946740108184840
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1470550124741048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 164b82101eb2840a599e64e1fea99724, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates: []
+  delegates: []
 --- !u!114 &114986361897752392
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -129,15 +143,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cmdName: Guard
-  cmdDesc: 'End your turn and Reduce 25% of the physical damage received until the
-    next turn.
+  cmdDesc: '[Defensive]
 
-    Defensive
+    End your turn and Reduce 25% of the physical damage received until the next turn.
 
     Effect: Physical Damage Received -25%
 
     Cost: 2 AP'
   cmdType: 1
+  cmdTargetImage: {fileID: 21300000, guid: ec8c53739d8424665b7ecee6241fef55, type: 3}
   isOnProgram: 0
   cmdCost: 2
   powerSum: 0
@@ -148,7 +162,7 @@ MonoBehaviour:
   canMiss: 0
   hitRateSum: 20
   hitRateMultiplier: 1
-  cmdTarget: 0
+  cmdTarget: 2
   distance: 2
   canCauseBuff: 1
   cmdBuff: 0

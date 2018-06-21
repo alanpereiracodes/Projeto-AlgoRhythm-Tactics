@@ -17,7 +17,7 @@ public class HUDManager : MonoBehaviour {
 
     //Damage & Hit Preview Box
 
-    private void Start()
+    void Start()
     {
         if (LevelManager._instance.hud == null)
             LevelManager._instance.hud = this;

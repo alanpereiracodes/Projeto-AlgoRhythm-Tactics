@@ -144,16 +144,25 @@ public class Tile : MonoBehaviour {
         }
     }
 
+    //Green
     public void CellMovable()
     {
         cellSprite.gameObject.SetActive(true);
-        cellSprite.color = new Color(140/255f, 1f, 160f/255f, 0.6f);
+        cellSprite.color = new Color(0.55f, 1f, 0.625f, 0.6f);
     }
 
+    //Yellow
     public void CellOnPlayerSelect()
     {
         cellSprite.gameObject.SetActive(true);
-        cellSprite.color = new Color(1f, 1f, 75f/255f, 0.6f);
+        cellSprite.color = new Color(1f, 1f, 0.3f, 0.6f);
+    }
+
+    //Red
+    public void CellOnTarget()
+    {
+        cellSprite.gameObject.SetActive(true);
+        cellSprite.color = new Color(1f, 0.3f, 0.3f, 0.6f);
     }
 
     public void CellDispose()

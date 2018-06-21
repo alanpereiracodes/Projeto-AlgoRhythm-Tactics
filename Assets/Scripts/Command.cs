@@ -10,7 +10,7 @@ public class Command : MonoBehaviour {
         Offensive,
         Defensive,
         Reactive,
-        Supportive,
+        Supportive
     }
 
     public enum TargetType
@@ -23,7 +23,8 @@ public class Command : MonoBehaviour {
         AtCell, //At a determined cell in front of unit, the distance is customizable
         CrossAtCell, //Cross at a determined cell in front of unit, the distance is customizable
         //Diagonal,
-        All
+        All,
+        Special //For unique commands
     }
 
     public enum Buff
@@ -107,7 +108,7 @@ public class Command : MonoBehaviour {
 
     [Header("Target Attributes")]
     public TargetType cmdTarget;
-    [Range(2, 6)]
+    [Range(2, 5)]
     public int distance;                                                        //If AtCell or CrossAtCell, the target cell is calculated in the following way: unit's cell + distance;
 
     [Header("Buff Attributes")]
@@ -224,11 +225,11 @@ public class Command : MonoBehaviour {
 
     public void OnMouseEnter()
     {
+        Debug.Log("1");
         if(!isOnProgram)
         {
-            //Show Descrição
-            //Update Desc Text
-            //Update Desc Target Type Image
+            //Ativa um Contorno no comando
+            LevelManager._instance.actionProgram.UpdateDescription(this);
             //Deixa em Vermelho as Celulas que serao atingidas
         }
     }
@@ -238,6 +239,7 @@ public class Command : MonoBehaviour {
         if (!isOnProgram)
         {
             //Hide Descrição
+            LevelManager._instance.actionProgram.HideDescPanel();
             //Retorna as Celulas ao normal
         } 
     }
