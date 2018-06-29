@@ -223,6 +223,8 @@ public class Command : MonoBehaviour {
     {
         if(isOnProgram)
         {
+            //Executa a função como se estive removendo o Mouse do botão
+            OnMouseExit();
             //Remove da Lista do Programa e Destroy.
             LevelManager._instance.actionProgram.RemoveCommandFromProgram(this);
         }

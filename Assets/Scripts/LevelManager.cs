@@ -353,6 +353,10 @@ public class LevelManager : MonoBehaviour
         foreach (Tile t in tilesTargeted)
         {
             t.CellDispose();
+            //Se a célula onde estava o alvejamento for a mesma do jogador (Target.Self)
+            //Volt a piscar em amarelo.
+            if (t.coord == turnPlayer.coord)
+                t.CellOnPlayerSelect();
         }
     }
 
