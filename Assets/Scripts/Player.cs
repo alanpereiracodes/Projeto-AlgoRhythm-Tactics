@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Player : Unit {
 
+    public List<Command.CommandName> commandSet;
+
     //Equipments
     //public Weapon playerWeapon;
     //

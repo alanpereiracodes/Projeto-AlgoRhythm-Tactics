@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 114518620711097406}
   - component: {fileID: 114603991164310578}
   m_Layer: 5
-  m_Name: Attack Command
+  m_Name: 0 Attack Command
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -106,6 +106,7 @@ MonoBehaviour:
   cmdType: 0
   cmdTargetImage: {fileID: 21300000, guid: 182949600af7e4a04acb5ab87ce53fc7, type: 3}
   isOnProgram: 0
+  ID: 0
   cmdCost: 2
   powerSum: 0
   powerMultiplier: 1

@@ -276,6 +276,7 @@ public class LevelManager : MonoBehaviour
         hud.ActivateActionPanel();
         hud.ActivateCancelPanel();
         actionProgram.UpdateActionPoints();
+        actionProgram.UpdateCommandSet();
         currentStatus = Status.Acting;
     }
 

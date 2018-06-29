@@ -23,6 +23,10 @@ public class ActionProgramManager : MonoBehaviour {
     //
     public int currentAP;
     public List<Command> program;
+    public List<GameObject> allCommands;
+
+    //private
+    private List<GameObject> cmdInCmdSet;
 
     void Start()
     {
@@ -32,6 +36,15 @@ public class ActionProgramManager : MonoBehaviour {
             Destroy(this);
 
         program = new List<Command>();
+        cmdInCmdSet = new List<GameObject>();
+
+        foreach(GameObject g in allCommands)
+        {
+            GameObject newGO = Instantiate(g);
+            newGO.transform.SetParent(commandSetPanel);
+            newGO.SetActive(false);
+            cmdInCmdSet.Add(newGO);
+        }
     }
 
     public void AddCommandToProgram(Command cmd)
@@ -90,6 +103,34 @@ public class ActionProgramManager : MonoBehaviour {
                 Destroy(toDestroy);
             }
             program.Clear();
+        }
+    }
+
+    public void UpdateCommandSet()
+    {
+        ClearCommandSet();
+        if (LevelManager._instance.turnPlayer.unitType == Unit.UnitType.Player)
+        {
+            Player p = LevelManager._instance.turnPlayer as Player;
+            List<GameObject> commandPrefabs = new List<GameObject>();
+
+            foreach(int i in p.commandSet)
+            {
+                foreach(GameObject g in cmdInCmdSet)
+                {
+                    if (g.GetComponent<Command>().ID == i)
+                        g.SetActive(true);
+                }
+            }
+        }
+    }
+
+    public void ClearCommandSet()
+    {
+        foreach(GameObject g in cmdInCmdSet)
+        {
+            if (g.activeInHierarchy)
+                g.SetActive(false);
         }
     }
 

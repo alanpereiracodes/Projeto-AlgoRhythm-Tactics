@@ -5,6 +5,15 @@ using UnityEngine.UI;
 
 public class Command : MonoBehaviour {
 
+    public enum CommandName
+    {
+        Attack = 0,
+        Guard,
+        FireBreath,
+        Heal
+
+    }
+
     public enum CommandType
     {
         Offensive,

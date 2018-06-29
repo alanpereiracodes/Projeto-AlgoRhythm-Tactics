@@ -1,12 +1,13 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/ActionProgramManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Player.cs">
     <Files>
       <File FileName="Assets/Scripts/LevelManager.cs" Line="286" Column="38" />
-      <File FileName="Assets/Scripts/ActionProgramManager.cs" Line="92" Column="29" />
+      <File FileName="Assets/Scripts/ActionProgramManager.cs" Line="110" Column="6" />
       <File FileName="Assets/Scripts/Command.cs" Line="250" Column="48" />
       <File FileName="Assets/Scripts/Board.cs" Line="179" Column="42" />
       <File FileName="Assets/Scripts/Unit.cs" Line="113" Column="49" />
       <File FileName="Assets/Scripts/Tile.cs" Line="170" Column="27" />
+      <File FileName="Assets/Scripts/Player.cs" Line="7" Column="22" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />

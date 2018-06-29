@@ -26,7 +26,7 @@ GameObject:
   - component: {fileID: 114618441713453012}
   - component: {fileID: 114338827986225296}
   m_Layer: 5
-  m_Name: Heal Command
+  m_Name: 3 Heal Command
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -137,6 +137,7 @@ MonoBehaviour:
   cmdType: 3
   cmdTargetImage: {fileID: 21300000, guid: 182949600af7e4a04acb5ab87ce53fc7, type: 3}
   isOnProgram: 0
+  ID: 3
   cmdCost: 2
   powerSum: 20
   powerMultiplier: 1
